@@ -6,7 +6,7 @@
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 17:52:45 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/09 18:07:09 by lwee             ###   ########.fr       */
+/*   Updated: 2022/10/09 23:15:21 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ char	*get_cmd_path(char *cmd, char **paths)
 	i = 0;
 	while (paths[i])
 	{
-		cmd_path = ft_strjoin(paths[i], cmd);
+		if (ft_strncmp(cmd, paths[i], ft_strlen(paths[i])) == 0)
+			cmd_path = cmd;
+		else
+			cmd_path = ft_strjoin(paths[i], cmd);
 		if (cmd_path == NULL)
 		{
 			free_strs(NULL, paths);
@@ -76,7 +79,7 @@ char	*get_cmd_path(char *cmd, char **paths)
 		free_strs(cmd_path, NULL);
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -85,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 	char	**paths;
 	int		i;
 	char	*cmd_path;
-	char	*cmd="ls";
+	char	*cmd="bin";
 
 	paths = get_env_paths(envp);
 	i = 0;
@@ -94,6 +97,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf("%s\n", paths[i]);
 		i++;
 	}
-	//cmd_path = get_cmd_path(cmd, paths);
-	//ft_printf("%s\n", cmd_path);
+	cmd_path = get_cmd_path(cmd, paths);
+	printf("%s\n", cmd_path);
+	printf("%d\n", access(cmd_path, F_OK | X_OK));
 }

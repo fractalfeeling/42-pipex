@@ -6,11 +6,11 @@
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 16:45:34 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/09 19:35:45 by lwee             ###   ########.fr       */
+/*   Updated: 2022/10/09 22:19:41 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/../inc/pipex.h"
+#include "../inc/pipex.h"
 
 int	main(int argc, char **argv, char **envp)
 {
