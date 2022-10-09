@@ -5,48 +5,53 @@
 #                                                     +:+ +:+         +:+      #
 #    By: lwee <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/06/15 23:29:11 by lwee              #+#    #+#              #
-#    Updated: 2022/09/01 02:16:44 by lwee             ###   ########.fr        #
+#    Created: 2022/03/01 15:07:48 by lwee              #+#    #+#              #
+#    Updated: 2022/10/09 19:34:07 by lwee             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
-AR = ar rcs
+CFLAGS += -Wall -Wextra -Werror -std=c99
 
-SRC	= ft_check_flags ft_check_width ft_print_di ft_print_p \
-		ft_print_x ft_check_precision ft_eval_format \
-		ft_printf ft_print_s ft_check_specifier ft_print_c \
-		ft_print_u ft_print_pct ft_nbr_fns
-SRCS = $(addsuffix .c, $(SRC))
-OBJS = $(addsuffix .o, $(SRC))
+NAME = libftprintf.a
 
+FILES := ft_check_flags ft_check_width ft_print_di ft_print_p \
+			ft_print_x ft_check_precision ft_eval_format \
+			ft_printf ft_print_s ft_check_specifier ft_print_c \
+			ft_print_u ft_print_pct ft_nbr_fns
+
+SRC_DIR = ./
+OBJ_DIR = ./
+INC_DIR = ../inc
 LIB_DIR = ../libft
-LIB = $(LIB_DIR)/libft.a
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
+OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
+
+AR = ar rcs
+RM = rm -f
 
 all: $(NAME)
 
-$(LIB): 
+$(OBJ_B) $(OBJ): %.o : %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME): $(OBJ)
 	make -C $(LIB_DIR)
+	cp $(LIB_DIR)/libft.a ./$(NAME)
+	$(AR) $@ $^
 
-$(NAME): $(LIB) $(OBJS)
-	cp $(LIB) $(NAME)
-	$(AR) $(NAME) $(OBJS)
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(INC_DIR)/ft_printf.h
+	$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ -c $<
 
-bonus: all
-	
 clean:
-	make -C $(LIB_DIR) clean
-	rm -rf *.o
+	$(RM) *.o
+	make clean -C $(LIB_DIR)
 
 fclean: clean
-	make -C $(LIB_DIR) fclean
-	rm -rf $(NAME)
+	$(RM) $(NAME)
+	make fclean -C $(LIB_DIR)
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus lib
+.PHONY: all clean fclean re

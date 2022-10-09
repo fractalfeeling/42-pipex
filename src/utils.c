@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nbr_fns.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/18 06:13:30 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/09 18:43:49 by lwee             ###   ########.fr       */
+/*   Created: 2022/10/09 14:13:08 by lwee              #+#    #+#             */
+/*   Updated: 2022/10/09 18:07:56 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf.h"
+#include "../inc/pipex.h"
 
-int	ft_nbrlenll(long long nb)
+void	free_strs(char *str, char **strs)
 {
-	int	n;
+	int	i;
 
-	n = 0;
-	if (nb == 0)
-		return (1);
-	if (nb < 0)
-		nb *= -1;
-	while (nb)
+	if (str)
 	{
-		nb /= 10;
-		n++;
+		free(str);
+		str = NULL;
 	}
-	return (n);
-}
-
-void	ft_putnbrll(long long nb)
-{
-	if (nb < 0)
-		nb *= -1;
-	if (nb > 9)
-		ft_putnbrll(nb / 10);
-	ft_putchar_fd(nb % 10 + '0', 1);
+	if (strs)
+	{
+		i = 0;
+		while (strs[i])
+		{
+			free(strs[i]);
+			i++;
+		}
+		free(strs);
+		strs = NULL;
+	}
 }

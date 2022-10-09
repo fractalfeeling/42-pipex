@@ -6,15 +6,16 @@
 #    By: lwee <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/01 15:07:48 by lwee              #+#    #+#              #
-#    Updated: 2022/09/01 01:00:08 by lwee             ###   ########.fr        #
+#    Updated: 2022/10/09 19:17:14 by lwee             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
+
 CC = gcc
-CFLAGS	= -Wall -Wextra -Werror
-AR = ar rcs
-SRC = ft_isalpha \
+CFLAGS += -Wall -Wextra -Werror -std=c99
+
+FILES = ft_isalpha \
 		ft_isdigit \
 		ft_isalnum \
 		ft_isascii \
@@ -58,27 +59,36 @@ BONUS = ft_lstnew \
 		ft_lstiter \
 		ft_lstmap
 
-SRCS = $(addsuffix .c, $(SRC))
-OBJS = $(addsuffix .o, $(SRC))
-BONUS_SRCS = $(addsuffix .c, $(BONUS))
-BONUS_OBJS = $(addsuffix .o, $(BONUS))
+SRC_DIR = ./
+OBJ_DIR = ./
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
+SRC_B = $(addprefix $(SRC_DIR), $(addsuffix .c, $(BONUS)))
 
-$(NAME): $(OBJS)
-	$(AR) $@ $^
+OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
+OBJ_B = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(BONUS)))
 
-bonus: $(OBJS) $(BONUS_OBJS)
-	$(AR) $(NAME) $^
+AR = ar rcs
+RM = rm -f
 
 all: $(NAME)
 
+$(OBJ_B) $(OBJ): %.o : %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME): $(OBJ)
+	$(AR) $@ $^
+	ranlib $@
+
+bonus: $(OBJ_B) $(OBJ)
+	$(AR) $(NAME) $^
+	ranlib $(NAME)
+
 clean:
-	rm -rf *.o
+	$(RM) *.o
 
 fclean: clean
-	rm -rf $(NAME)
+	$(RM) $(NAME)
 
 re: fclean all
 

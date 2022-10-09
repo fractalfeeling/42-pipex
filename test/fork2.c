@@ -1,39 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nbr_fns.c                                       :+:      :+:    :+:   */
+/*   fork2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/18 06:13:30 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/09 18:43:49 by lwee             ###   ########.fr       */
+/*   Created: 2022/10/09 15:12:17 by lwee              #+#    #+#             */
+/*   Updated: 2022/10/09 15:21:04 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf.h"
+#include "pipex.h"
 
-int	ft_nbrlenll(long long nb)
+int	main(void)
 {
-	int	n;
+	pid_t	pid;
 
-	n = 0;
-	if (nb == 0)
+	pid = fork();
+	if (pid == -1)
 		return (1);
-	if (nb < 0)
-		nb *= -1;
-	while (nb)
+	if (pid == 0)
 	{
-		nb /= 10;
-		n++;
+		printf("Child: I'm the child, my internal pid is %d.\n", pid);
+		usleep(1000000);
+		printf("Child: Done!\n");
 	}
-	return (n);
-}
-
-void	ft_putnbrll(long long nb)
-{
-	if (nb < 0)
-		nb *= -1;
-	if (nb > 9)
-		ft_putnbrll(nb / 10);
-	ft_putchar_fd(nb % 10 + '0', 1);
+	else if (pid > 0)
+	{
+		printf("Parent: I'm the parent, my child's pid is %d.\n", pid);
+		printf("Parent: Done!\n");
+	}
+	return (0);
 }
