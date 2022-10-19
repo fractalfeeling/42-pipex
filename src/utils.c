@@ -6,7 +6,7 @@
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 17:52:45 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/19 19:55:52 by lwee             ###   ########.fr       */
+/*   Updated: 2022/10/19 21:43:52 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*get_env_path(char **envp)
 		if (path)
 		{
 			path = ft_substr(path, 5, ft_strlen(path) - 5);
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -94,9 +94,9 @@ char	*get_cmd_path(char *cmd, char **paths)
 			exit(1);
 		}
 		if (access(cmd_path, F_OK | X_OK) == 0)
-			return (cmd_path);
+			break ;
 		free_strs(cmd_path, NULL);
 		i++;
 	}
-	return (NULL);
+	return (cmd_path);
 }
