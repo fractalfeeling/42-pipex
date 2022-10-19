@@ -6,7 +6,7 @@
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:15:56 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/19 21:52:45 by lwee             ###   ########.fr       */
+/*   Updated: 2022/10/19 22:01:03 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ int	main(int argc, char **argv, char **envp)
 	i = 2 + here_doc;
 	while (i < argc - 2)
 		create_child(argv[i++], envp, paths);
+	if (here_doc == 1)
+		unlink(".here_doc.tmp");
 	dup2(fd_outfile, STDOUT_FILENO);
 	exec_process(argv[i], envp, paths);
 }
