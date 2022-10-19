@@ -6,7 +6,7 @@
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 17:52:45 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/19 01:58:14 by lwee             ###   ########.fr       */
+/*   Updated: 2022/10/19 19:55:52 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,25 +100,3 @@ char	*get_cmd_path(char *cmd, char **paths)
 	}
 	return (NULL);
 }
-
-/*
-int	main(int argc, char **argv, char **envp)
-{
-	char	*path;
-	char	**paths;
-	int		i;
-	char	*cmd_path;
-	char	*cmd="bash";
-
-	paths = get_env_paths(envp);
-	i = 0;
-	while (paths[i])
-	{
-		ft_printf("%s\n", paths[i]);
-		i++;
-	}
-	cmd_path = get_cmd_path(cmd, paths);
-	printf("CMD PATH: %s\n", cmd_path);
-	printf("%d\n", access(cmd_path, F_OK | X_OK));
-}
-*/

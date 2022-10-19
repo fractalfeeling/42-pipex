@@ -6,7 +6,7 @@
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 23:25:29 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/19 03:06:30 by lwee             ###   ########.fr       */
+/*   Updated: 2022/10/19 19:56:57 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <errno.h>
 # include "ft_printf.h"
 # include "get_next_line.h"
+# include "../libft/libft.h"
 
 /*  utils.c  */
 void	free_strs(char *str, char **strs);

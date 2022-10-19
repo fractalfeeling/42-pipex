@@ -6,18 +6,19 @@
 #    By: lwee <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/19 14:30:57 by lwee              #+#    #+#              #
-#    Updated: 2022/10/19 16:17:30 by lwee             ###   ########.fr        #
+#    Updated: 2022/10/19 20:07:12 by lwee             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
-FILES := utils get_next_line pipex
-
 SRC_DIR = ./src
 OBJ_DIR = ./src
 INC_DIR = ./inc
 LIB_DIR = ./ft_printf
+FTPRINTF = -L $(LIB_DIR) -lftprintf
+
+FILES := utils get_next_line pipex
 
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
@@ -30,24 +31,20 @@ RM = rm -f
 
 all: $(NAME)
 
-$(OBJ): %.o : %.c
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	make -C $(LIB_DIR)
-	cp $(LIB_DIR)/libftprintf.a ./$(NAME)
-	$(CC) $ZZ
-
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	make re -C $(LIB_DIR)
+	$(CC) $(CFLAGS) $(FTPRINTF) -o $(NAME)
 
 clean:
-	$(RM) *.o
 	make clean -C $(LIB_DIR)
+	$(RM) $(OBJ)
 
 fclean: clean
-	$(RM) $(NAME)
 	make fclean -C $(LIB_DIR)
+	$(RM) $(NAME)
 
 re: fclean all
 
