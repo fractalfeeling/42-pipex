@@ -6,7 +6,7 @@
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:15:56 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/19 14:17:35 by lwee             ###   ########.fr       */
+/*   Updated: 2022/10/19 21:19:48 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,10 @@ int	main(int argc, char **argv, char **envp)
 	paths = get_env_paths(envp);
 	if (paths == NULL)
 		return (0);
-	printf("Arguments: %d\n", argc);
 	here_doc = handle_iofiles(argc, argv, &fd_infile, &fd_outfile);
 	i = 2 + here_doc;
 	while (i < argc - 2)
-		create_child(argv[i], envp, paths);
+		create_child(argv[i++], envp, paths);
 	dup2(fd_outfile, STDOUT_FILENO);
 	exec_process(argv[i], envp, paths);
 	exit(EXIT_SUCCESS);

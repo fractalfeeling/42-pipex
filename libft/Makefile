@@ -6,15 +6,14 @@
 #    By: lwee <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/01 15:07:48 by lwee              #+#    #+#              #
-#    Updated: 2022/10/19 19:34:56 by lwee             ###   ########.fr        #
+#    Updated: 2022/10/19 21:03:02 by lwee             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-SRC_DIR = .
-OBJ_DIR = .
-INC_DIR = .
+CC = gcc
+CFLAGS += -Wall -Wextra -Werror -std=c99
 
 FILES := ft_isalpha \
 		ft_isdigit \
@@ -60,22 +59,24 @@ BONUS := ft_lstnew \
 		ft_lstiter \
 		ft_lstmap
 
-CC = gcc
-CFLAGS += -Wall -Wextra -Werror -std=c99 -I $(INC_DIR)
+SRC_DIR = ./
+OBJ_DIR = ./
+INC_DIR = ./
+INC += -I $(INC_DIR)
 
-SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
-SRC_B = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(BONUS)))
+SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
+SRC_B = $(addprefix $(SRC_DIR), $(addsuffix .c, $(BONUS)))
 
-OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
-OBJ_B = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(BONUS)))
+OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
+OBJ_B = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(BONUS)))
 
 AR = ar rcs
 RM = rm -f
 
 all: $(NAME)
 
-$(OBJ) $(OBJ_B): %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
 $(NAME): $(OBJ)
 	$(AR) $@ $^
