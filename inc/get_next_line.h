@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 16:57:34 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/19 10:58:34 by lwee             ###   ########.fr       */
+/*   Created: 2022/07/11 19:58:58 by lwee              #+#    #+#             */
+/*   Updated: 2022/10/19 03:51:53 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t			i;
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include "../libft/libft.h"
 
-	if (n == 0)
-		return (0);
-	i = 0;
-	while (i < n - 1  && s1[i] == s2[i] && s1[i] && s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
+# define FD_SIZE 1024
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE BUFSIZ
+# endif
+
+// GNL
+void	free_str(char **str);
+int		find_newline(char *str);
+void	read_line(int fd, char **storage);
+char	*get_line(char **storage);
+char	*get_next_line(int fd);
+
+#endif

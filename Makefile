@@ -5,45 +5,50 @@
 #                                                     +:+ +:+         +:+      #
 #    By: lwee <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/09 18:19:21 by lwee              #+#    #+#              #
-#    Updated: 2022/10/09 19:18:13 by lwee             ###   ########.fr        #
+#    Created: 2022/10/19 14:30:57 by lwee              #+#    #+#              #
+#    Updated: 2022/10/19 16:17:30 by lwee             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
-INC_DIR = inc
-SRC_DIR = src
-OBJ_DIR = obj
+FILES := utils get_next_line pipex
 
-FILES := 
+SRC_DIR = ./src
+OBJ_DIR = ./src
+INC_DIR = ./inc
+LIB_DIR = ./ft_printf
 
-FILES_DIR := $(addprefix $(SRC_DIR)/, $(FILES))
+SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
+OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
 
-SRC := $(addsuffix .c, $(FILES_DIR))
-
-OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-
+CC = gcc
 CFLAGS += -Wall -Wextra -Werror -std=c99 -I $(INC_DIR)
 
-MKDIR = mkdir -p
-RMDIR = rmdir
+AR = ar rcs
+RM = rm -f
 
 all: $(NAME)
 
-$(OBJ_DIR):
-	$(MKDIR) $@
-
-$(OBJ): $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c | $(OBJ_DIR)
+$(OBJ): %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -o $@
+	make -C $(LIB_DIR)
+	cp $(LIB_DIR)/libftprintf.a ./$(NAME)
+	$(CC) $ZZ
+
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) -r $(OBJ_DIR)
+	$(RM) *.o
+	make clean -C $(LIB_DIR)
 
 fclean: clean
 	$(RM) $(NAME)
+	make fclean -C $(LIB_DIR)
 
 re: fclean all
+
+.PHONY: all clean fclean re

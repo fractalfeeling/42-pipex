@@ -1,16 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_env.c                                        :+:      :+:    :+:   */
+/*   ft_envp.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/09 17:52:45 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/09 23:15:21 by lwee             ###   ########.fr       */
+/*   Created: 2022/10/08 23:56:03 by lwee              #+#    #+#             */
+/*   Updated: 2022/10/09 01:30:28 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/pipex.h"
+#include "pipex.h"
+
+void	free_strs(char *str, char **strs)
+{
+	int	i;
+
+	if (str != NULL)
+	{
+		free(str);
+		str = NULL;
+	}
+	if (strs != NULL)
+	{
+		i = 0;
+		while (strs[i])
+		{
+			free(strs[i]);
+			i++;
+		}
+		free(strs);
+		strs = NULL;
+	}
+}
 
 char	*get_env_path(char **envp)
 {
@@ -33,7 +55,7 @@ char	*get_env_path(char **envp)
 }
 
 
-char	**get_env_paths(char **envp)
+static char	**get_env_paths(char **envp)
 {
 	char	*tmp;
 	char	**paths;
@@ -57,7 +79,7 @@ char	**get_env_paths(char **envp)
 	return (paths);
 }
 
-char	*get_cmd_path(char *cmd, char **paths)
+static char	*get_cmd_path(char *cmd, char **paths)
 {
 	char	*cmd_path;
 	int		i;
@@ -66,10 +88,7 @@ char	*get_cmd_path(char *cmd, char **paths)
 	i = 0;
 	while (paths[i])
 	{
-		if (ft_strncmp(cmd, paths[i], ft_strlen(paths[i])) == 0)
-			cmd_path = cmd;
-		else
-			cmd_path = ft_strjoin(paths[i], cmd);
+		cmd_path = ft_strjoin(paths[i], cmd);
 		if (cmd_path == NULL)
 		{
 			free_strs(NULL, paths);
@@ -79,7 +98,7 @@ char	*get_cmd_path(char *cmd, char **paths)
 		free_strs(cmd_path, NULL);
 		i++;
 	}
-	return (NULL);
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -88,7 +107,7 @@ int	main(int argc, char **argv, char **envp)
 	char	**paths;
 	int		i;
 	char	*cmd_path;
-	char	*cmd="bin";
+	char	*cmd="ls";
 
 	paths = get_env_paths(envp);
 	i = 0;
@@ -98,6 +117,5 @@ int	main(int argc, char **argv, char **envp)
 		i++;
 	}
 	cmd_path = get_cmd_path(cmd, paths);
-	printf("%s\n", cmd_path);
-	printf("%d\n", access(cmd_path, F_OK | X_OK));
+	ft_printf("%s\n", cmd_path);
 }

@@ -6,7 +6,7 @@
 #    By: lwee <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/01 15:07:48 by lwee              #+#    #+#              #
-#    Updated: 2022/10/09 19:34:07 by lwee             ###   ########.fr        #
+#    Updated: 2022/10/19 16:11:13 by lwee             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,20 +20,20 @@ FILES := ft_check_flags ft_check_width ft_print_di ft_print_p \
 			ft_printf ft_print_s ft_check_specifier ft_print_c \
 			ft_print_u ft_print_pct ft_nbr_fns
 
-SRC_DIR = ./
-OBJ_DIR = ./
+SRC_DIR = .
+OBJ_DIR = .
 INC_DIR = ../inc
 LIB_DIR = ../libft
 
-SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
-OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
+SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
+OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
 
 AR = ar rcs
 RM = rm -f
 
 all: $(NAME)
 
-$(OBJ_B) $(OBJ): %.o : %.c
+$(OBJ): %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
@@ -41,8 +41,8 @@ $(NAME): $(OBJ)
 	cp $(LIB_DIR)/libft.a ./$(NAME)
 	$(AR) $@ $^
 
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(INC_DIR)/ft_printf.h
-	$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ -c $<
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	$(RM) *.o
