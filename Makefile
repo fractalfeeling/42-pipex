@@ -6,7 +6,7 @@
 #    By: lwee <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/19 14:30:57 by lwee              #+#    #+#              #
-#    Updated: 2022/10/19 21:03:03 by lwee             ###   ########.fr        #
+#    Updated: 2022/10/20 16:11:41 by lwee             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,11 @@ FILES := get_next_line pipex utils
 SRC_DIR = ./src/
 OBJ_DIR = ./src/
 INC_DIR = ./inc/
+INC += -I $(INC_DIR)
+
+LIBNAME =  libftprintf.a
 LIB_DIR = ./ft_printf/
 LIB += -L $(LIB_DIR) -lftprintf
-INC += -I $(INC_DIR)
 
 SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
 OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))

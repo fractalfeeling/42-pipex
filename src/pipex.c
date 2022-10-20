@@ -6,7 +6,7 @@
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:15:56 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/19 22:08:09 by lwee             ###   ########.fr       */
+/*   Updated: 2022/10/20 16:09:34 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ void	exec_process(char *argv, char **envp, char **paths)
 	if (cmd_path == NULL)
 	{
 		free_strs(NULL, cmd_options);
-		exit(0);
+		ft_putstr_fd("command not found", 2);
+		exit(1);
 	}
 	if (execve(cmd_path, cmd_options, envp) == -1)
-		exit(0);
+		exit(1);
 }
 
 void	create_child(char *argv, char **envp, char **paths)
