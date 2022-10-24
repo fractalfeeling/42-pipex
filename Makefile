@@ -6,7 +6,7 @@
 #    By: lwee <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/19 14:30:57 by lwee              #+#    #+#              #
-#    Updated: 2022/10/24 16:49:07 by lwee             ###   ########.fr        #
+#    Updated: 2022/10/24 17:45:25 by lwee             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ CC = gcc
 CFLAGS += -Wall -Wextra -Werror -std=c99
 
 FILES := pipex utils get_next_line
+BONUS := pipex_bonus utils get_next_line
 
 SRC_DIR = src
 OBJ_DIR = src
@@ -28,6 +29,8 @@ LIB += -L$(LIB_DIR) -lft
 
 SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
+SRC_B = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(BONUS)))
+OBJ_B = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(BONUS)))
 
 all: $(NAME)
 
@@ -36,6 +39,8 @@ all: $(NAME)
 
 $(NAME): $(LIB_DIR)/$(LIBNAME) $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $(OBJ) $(INC) $(LIB)
+
+bonus: all
 
 $(LIB_DIR)/$(LIBNAME):
 	make -C $(LIB_DIR)
