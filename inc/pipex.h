@@ -6,7 +6,7 @@
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 23:25:29 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/24 14:46:39 by lwee             ###   ########.fr       */
+/*   Updated: 2022/10/24 16:37:03 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <sys/wait.h>
 # include <string.h>
 # include <errno.h>
-# include "ft_printf.h"
 # include "get_next_line.h"
 # include "libft.h"
 

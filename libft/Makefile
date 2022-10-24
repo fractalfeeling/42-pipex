@@ -6,7 +6,7 @@
 #    By: lwee <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/01 15:07:48 by lwee              #+#    #+#              #
-#    Updated: 2022/10/24 15:28:05 by lwee             ###   ########.fr        #
+#    Updated: 2022/10/24 16:46:28 by lwee             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,8 +69,6 @@ SRC_B = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(BONUS)))
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
 OBJ_B = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(BONUS)))
-
-#DEP = $(INC_DIR)/libft.h
 
 all: $(NAME)
 

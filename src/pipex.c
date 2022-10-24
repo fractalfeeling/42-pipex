@@ -6,7 +6,7 @@
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:15:56 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/24 16:33:11 by lwee             ###   ########.fr       */
+/*   Updated: 2022/10/24 16:41:12 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	handle_iofiles(int argc, char **argv, int *fd_infile, int *fd_outfile)
 	}
 	if (here_doc == -1 || *fd_outfile == -1 || *fd_infile == -1)
 	{
+		ft_putendl_fd("file error", 2);
 		exit(1);
 	}
 	return (here_doc);
@@ -123,9 +124,8 @@ int	main(int argc, char **argv, char **envp)
 	i = 2 + here_doc;
 	while (i < argc - 2)
 		create_child(argv[i++], envp, paths);
+	unlink(".here_doc.tmp");
 	dup2(fd_outfile, STDOUT_FILENO);
 	exec_process(argv[i], envp, paths);
-	if (here_doc == 1)
-		unlink(".here_doc.tmp");
 	return (0);
 }
