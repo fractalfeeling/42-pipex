@@ -6,7 +6,7 @@
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 17:52:45 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/19 21:43:52 by lwee             ###   ########.fr       */
+/*   Updated: 2022/10/24 16:54:31 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ char	*get_cmd_path(char *cmd, char **paths)
 		if (cmd_path == NULL)
 		{
 			free_strs(NULL, paths);
+			ft_putendl_fd("error: environment path error", 2);
 			exit(1);
 		}
 		if (access(cmd_path, F_OK | X_OK) == 0)

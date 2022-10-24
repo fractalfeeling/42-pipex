@@ -6,7 +6,7 @@
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:15:56 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/24 16:41:12 by lwee             ###   ########.fr       */
+/*   Updated: 2022/10/24 16:52:39 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exec_process(char *argv, char **envp, char **paths)
 	cmd_path = get_cmd_path(cmd_options[0], paths);
 	if (execve(cmd_path, cmd_options, envp) == -1)
 	{
-		ft_putstr_fd("command not found: ", 2);
+		ft_putstr_fd("error: command not found: ", 2);
 		ft_putendl_fd(argv, 2);
 		exit(1);
 	}
@@ -101,7 +101,7 @@ int	handle_iofiles(int argc, char **argv, int *fd_infile, int *fd_outfile)
 	}
 	if (here_doc == -1 || *fd_outfile == -1 || *fd_infile == -1)
 	{
-		ft_putendl_fd("file error", 2);
+		ft_putendl_fd("error: file open error", 2);
 		exit(1);
 	}
 	return (here_doc);
@@ -116,10 +116,16 @@ int	main(int argc, char **argv, char **envp)
 	int		i;
 
 	if (argc < 5)
+	{
+		ft_putendl_fd("error: less than 4 arguments", 2);
 		exit(1);
+	}
 	paths = get_env_paths(envp);
 	if (paths == NULL)
-		return (1);
+	{
+		ft_putendl_fd("error: environment path error", 2);
+		exit(1);
+	}
 	here_doc = handle_iofiles(argc, argv, &fd_infile, &fd_outfile);
 	i = 2 + here_doc;
 	while (i < argc - 2)
@@ -127,5 +133,4 @@ int	main(int argc, char **argv, char **envp)
 	unlink(".here_doc.tmp");
 	dup2(fd_outfile, STDOUT_FILENO);
 	exec_process(argv[i], envp, paths);
-	return (0);
 }

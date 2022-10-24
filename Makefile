@@ -6,7 +6,7 @@
 #    By: lwee <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/19 14:30:57 by lwee              #+#    #+#              #
-#    Updated: 2022/10/24 16:44:39 by lwee             ###   ########.fr        #
+#    Updated: 2022/10/24 16:49:07 by lwee             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ $(NAME): $(LIB_DIR)/$(LIBNAME) $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $(OBJ) $(INC) $(LIB)
 
 $(LIB_DIR)/$(LIBNAME):
-	make all -C $(LIB_DIR)
+	make -C $(LIB_DIR)
 
 clean:
 	make clean -C $(LIB_DIR)
