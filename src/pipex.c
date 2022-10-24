@@ -6,11 +6,11 @@
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:15:56 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/20 16:09:34 by lwee             ###   ########.fr       */
+/*   Updated: 2022/10/24 16:33:11 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/pipex.h"
+#include "pipex.h"
 
 void	exec_process(char *argv, char **envp, char **paths)
 {
@@ -19,14 +19,12 @@ void	exec_process(char *argv, char **envp, char **paths)
 
 	cmd_options = ft_split(argv, ' ');
 	cmd_path = get_cmd_path(cmd_options[0], paths);
-	if (cmd_path == NULL)
+	if (execve(cmd_path, cmd_options, envp) == -1)
 	{
-		free_strs(NULL, cmd_options);
-		ft_putstr_fd("command not found", 2);
+		ft_putstr_fd("command not found: ", 2);
+		ft_putendl_fd(argv, 2);
 		exit(1);
 	}
-	if (execve(cmd_path, cmd_options, envp) == -1)
-		exit(1);
 }
 
 void	create_child(char *argv, char **envp, char **paths)
@@ -90,7 +88,7 @@ int	handle_iofiles(int argc, char **argv, int *fd_infile, int *fd_outfile)
 	{
 		here_doc = 0;
 		*fd_outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		*fd_infile = open(argv[1], O_RDONLY, 0644);
+		*fd_infile = open(argv[1], O_RDONLY);
 		dup2(*fd_infile, STDIN_FILENO);
 	}
 	else if (argc >= 6 && ft_strncmp(argv[1], "here_doc", 8) == 0)
@@ -102,7 +100,9 @@ int	handle_iofiles(int argc, char **argv, int *fd_infile, int *fd_outfile)
 		dup2(*fd_infile, STDIN_FILENO);
 	}
 	if (here_doc == -1 || *fd_outfile == -1 || *fd_infile == -1)
+	{
 		exit(1);
+	}
 	return (here_doc);
 }
 
@@ -118,13 +118,14 @@ int	main(int argc, char **argv, char **envp)
 		exit(1);
 	paths = get_env_paths(envp);
 	if (paths == NULL)
-		return (0);
+		return (1);
 	here_doc = handle_iofiles(argc, argv, &fd_infile, &fd_outfile);
 	i = 2 + here_doc;
 	while (i < argc - 2)
 		create_child(argv[i++], envp, paths);
-	if (here_doc == 1)
-		unlink(".here_doc.tmp");
 	dup2(fd_outfile, STDOUT_FILENO);
 	exec_process(argv[i], envp, paths);
+	if (here_doc == 1)
+		unlink(".here_doc.tmp");
+	return (0);
 }

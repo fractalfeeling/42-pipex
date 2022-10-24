@@ -6,7 +6,7 @@
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:58:58 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/19 03:51:53 by lwee             ###   ########.fr       */
+/*   Updated: 2022/10/24 14:46:15 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include "../libft/libft.h"
+# include "libft.h"
 
 # define FD_SIZE 1024
 # ifndef BUFFER_SIZE

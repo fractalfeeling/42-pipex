@@ -6,7 +6,7 @@
 #    By: lwee <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/01 15:07:48 by lwee              #+#    #+#              #
-#    Updated: 2022/10/19 21:03:02 by lwee             ###   ########.fr        #
+#    Updated: 2022/10/24 15:28:05 by lwee             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,38 +59,35 @@ BONUS := ft_lstnew \
 		ft_lstiter \
 		ft_lstmap
 
-SRC_DIR = ./
-OBJ_DIR = ./
-INC_DIR = ./
-INC += -I $(INC_DIR)
+SRC_DIR = .
+OBJ_DIR = .
+INC_DIR = ../inc
+INC += -I$(INC_DIR)
 
-SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
-SRC_B = $(addprefix $(SRC_DIR), $(addsuffix .c, $(BONUS)))
+SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
+SRC_B = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(BONUS)))
 
-OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
-OBJ_B = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(BONUS)))
+OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
+OBJ_B = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(BONUS)))
 
-AR = ar rcs
-RM = rm -f
+#DEP = $(INC_DIR)/libft.h
 
 all: $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
+	$(CC) $(CFLAGS) -c -o $@ $< $(INC)
 
 $(NAME): $(OBJ)
-	$(AR) $@ $^
-	ranlib $@
+	ar rcs $@ $^
 
 bonus: $(OBJ) $(OBJ_B)
-	$(AR) $(NAME) $^
-	ranlib $(NAME)
+	ar rcs $(NAME) $^
 
 clean:
-	$(RM) $(OBJ) $(OBJ_B)
+	rm -f $(OBJ) $(OBJ_B)
 
 fclean: clean
-	$(RM) $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 #    By: lwee <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/19 14:30:57 by lwee              #+#    #+#              #
-#    Updated: 2022/10/20 16:11:41 by lwee             ###   ########.fr        #
+#    Updated: 2022/10/24 16:20:35 by lwee             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,39 +15,38 @@ NAME = pipex
 CC = gcc
 CFLAGS += -Wall -Wextra -Werror -std=c99
 
-FILES := get_next_line pipex utils
+FILES := pipex utils get_next_line
 
-SRC_DIR = ./src/
-OBJ_DIR = ./src/
-INC_DIR = ./inc/
-INC += -I $(INC_DIR)
+SRC_DIR = src
+OBJ_DIR = src
+INC_DIR = inc
+INC += -I$(INC_DIR)
 
-LIBNAME =  libftprintf.a
-LIB_DIR = ./ft_printf/
-LIB += -L $(LIB_DIR) -lftprintf
+LIBNAME = libft
+LIB_DIR = libft
+LIB += -L$(LIB_DIR) -lft
 
-SRC = $(addprefix $(SRC_DIR), $(addsuffix .c, $(FILES)))
-OBJ = $(addprefix $(OBJ_DIR), $(addsuffix .o, $(FILES)))
-
-AR = ar rcs
-RM = rm -f
+SRC = $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
+OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
 
 all: $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
+	$(CC) $(CFLAGS) -c -o $@ $< $(INC)
 
-$(NAME): $(OBJ)
-	make re -C $(LIB_DIR)
-	$(CC) $(CFLAGS) $(OBJ) -o $@ $(LIB)
+$(NAME): $(LIB_DIR)/$(LIBNAME) $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $(OBJ) $(INC) $(LIB)
+
+$(LIB_DIR)/$(LIBNAME):
+	make -C $(LIB_DIR)
 
 clean:
 	make clean -C $(LIB_DIR)
-	$(RM) $(OBJ)
+	rm -f $(OBJ)
 
 fclean: clean
 	make fclean -C $(LIB_DIR)
-	$(RM) $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 
