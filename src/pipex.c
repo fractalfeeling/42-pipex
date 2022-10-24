@@ -6,7 +6,7 @@
 /*   By: lwee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 17:15:56 by lwee              #+#    #+#             */
-/*   Updated: 2022/10/24 17:46:27 by lwee             ###   ########.fr       */
+/*   Updated: 2022/10/24 17:51:04 by lwee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,16 +121,14 @@ int	main(int argc, char **argv, char **envp)
 		exit(1);
 	}
 	paths = get_env_paths(envp);
-	if (paths == NULL)
-	{
-		ft_putendl_fd("error: environment path error", 2);
-		exit(1);
-	}
 	here_doc = handle_iofiles(argc, argv, &fd_infile, &fd_outfile);
 	i = 2 + here_doc;
 	while (i < argc - 2)
 		create_child(argv[i++], envp, paths);
-	unlink(".here_doc.tmp");
+	if (here_doc == 1)
+		unlink(".here_doc.tmp");
+	else
+		close(fd_infile);
 	dup2(fd_outfile, STDOUT_FILENO);
 	exec_process(argv[i], envp, paths);
 }
